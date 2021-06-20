@@ -1,0 +1,22 @@
+{
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "@vue/composition-api": "1.0.0-rc.11",
+    "vue": "^2.6.14",
+    "vuetify": "^2.5.3"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^1.2.3",
+    "@vue/compiler-sfc": "^3.0.5",
+    "vite": "^2.3.7",
+    "deepmerge": "^4.2.2",
+    "sass": "^1.34.1",
+    "sass-loader": "^12.1.0",
+    "vite-plugin-vue2": "^1.6.2"
+  }
+}
