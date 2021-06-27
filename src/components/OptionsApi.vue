@@ -18,7 +18,7 @@
           <v-container>
             <v-row>
               <v-col cols="12">
-                <div class="text-h3 text-center">{{title}}</div>
+                <div class="text-h3 text-center">Registration Form</div>
               </v-col>
               <v-col cols="12">
                 <v-form ref="form" v-model="valid" lazy-validation>
@@ -65,104 +65,50 @@
 </template>
 
 <script>
-import { ref, computed, toRefs } from "@vue/composition-api";
-
-const fullnameComposition = () => {
-  const fullname = ref("");
-
-  const fullnameRule = (val) => {
-    return (
-      val.split(" ").length >= 2 ||
-      "A full name can't be only 1 word (Unless you are Madona or some other creature...)"
-    );
-  };
-  return { fullname, fullnameRule };
-};
-
-const emailComposition = () => {
-  const email = ref("");
-
-  const emailRule = (val) => {
-    const regex = /[\w\W]+\@gmail\.com/gm;
-    return (
-      regex.test(val) ||
-      "We currently support only gmail (For the sake of the example of course)"
-    );
-  };
-
-  return { email, emailRule };
-};
-
-const countryComposition = () => {
-  const country = ref("");
-
-  const countries = computed(() => ["United States", "Canada", "Israel", "Germany", "India", "China"])
-
-  return { country, countries };
-};
-
-const registerComposition = () => {
-  const form = ref(null);
-  const error = ('')
-  const valid = ref(true);
-
-    const validateCountry = () => {
+export default {
+  data() {
+    return {
+      fullname: '',
+      email: '',
+      country: '',
+      valid: true,
+      error: false
+    };
+  },
+  methods: {
+    emptyFieldRule (val) {
+      return !!val || "Required field";
+    },
+    fullnameRule (val) {
+      return val.split(" ").length >= 2 || "A full name can't be only 1 word (Unless you are Madona or some other creature...)"
+    },
+    emailRule (val) {
+      const regex = /[\w\W]+\@gmail\.com/gm;
+      return regex.test(val) || "We currently support only gmail (For the sake of the example of course)"
+    },
+    printForm () {
+      if (this.$refs.form.validate() && this.validateCountry()) {
+        console.log({
+          fullname: this.fullname,
+          email: this.email,
+          country: this.country
+        })
+      }
+    },
+    validateCountry () {
       if (this.country === 'India') {
-        error.value = 'Wrong country - Do a relocation and change your name'
+        this.error = 'Wrong country - Do a relocation and change your name'
       } else {
-        error.value = ''
+        this.error = ''
         return true
       }
     }
-
-  const printForm = () => {
-    if (form.value.validate() && validateCountry()) {
-      console.log({
-        fullname: fullname.value,
-        email: email.value,
-        country: country.value,
-      });
-    }
-  };
-
-  return { form, valid, printForm, error };
-};
-
-export default {
-  props: {
-    title: String
   },
-  setup(props) {
-    const {title} = toRefs(props)
-
-    title.value = 'new title'
-
-    const emptyFieldRule = (val) => {
-      return !!val || "Required field";
-    };
-
-    const { fullname, fullnameRule } = fullnameComposition();
-
-    const { email, emailRule } = emailComposition();
-
-    const { country, countries } = countryComposition();
-
-    const { form, valid, printForm, error } = registerComposition();
-
-    return {
-      fullname,
-      emptyFieldRule,
-      fullnameRule,
-      email,
-      emailRule,
-      country,
-      countries,
-      printForm,
-      form,
-      valid,
-      error
+  computed: {
+    countries () {
+      return ["United States", "Canada", "Israel", "Germany", "India", "China"]
     }
-  }
+  },
 };
 </script>
 

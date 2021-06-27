@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <!-- <Main/> -->
-    <CompExample></CompExample>
+    <CompExample title="Registration Form"></CompExample>
   </v-app>
 </template>
 
