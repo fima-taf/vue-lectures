@@ -49,54 +49,71 @@
 </template>
 
 <script>
+import { ref, computed, toRef, toRefs, reactive } from "@vue/composition-api";
+
 export default {
   props: {
     title: String
   },
-  data() {
-    return {
-      fullname: '',
-      email: '',
-      country: '',
-      valid: true,
-      error: false
-    };
-  },
-  methods: {
-    emptyFieldRule (val) {
+  setup(props) {
+
+    // const title = toRef(props, 'title')
+    // const {title} = toRefs(props)
+
+    const emptyFieldRule = (val) => {
       return !!val || "Required field";
-    },
-    fullnameRule (val) {
+    }
+
+    // const formToSend = reactive({
+    //   fullname: '',
+    //   email: '',
+    //   country: ''
+    // })
+
+    // const fullname = ref('');
+
+    const fullnameRule = (val) => {
       return val.split(" ").length >= 2 || "A full name can't be only 1 word (Unless you are Madona or some other creature...)"
-    },
-    emailRule (val) {
+    }
+
+    // const email = ref('');
+
+    const emailRule = (val) => {
       const regex = /[\w\W]+\@gmail\.com/gm;
       return regex.test(val) || "We currently support only gmail (For the sake of the example of course)"
-    },
-    printForm () {
-      if (this.$refs.form.validate() && this.validateCountry()) {
-        console.log({
-          fullname: this.fullname,
-          email: this.email,
-          country: this.country
-        })
-      }
-    },
-    validateCountry () {
-      if (this.country === 'India') {
-        this.error = 'Wrong country - Do a relocation and change your name'
+    }
+
+    // const country = ref('');
+
+    const countries = computed(() => ["United States", "Canada", "Israel", "Germany", "India", "China"])
+
+    const form = ref(null);
+    const error = ref('')
+    const valid = ref(true);
+
+    const validateCountry = () => {
+      if (country.value === 'India') {
+        error.value = 'Wrong country - Do a relocation and change your name'
       } else {
-        this.error = ''
+        error.value = ''
         return true
       }
     }
-  },
-  computed: {
-    countries () {
-      return ["United States", "Canada", "Israel", "Germany", "India", "China"]
+
+    const printForm = () => {
+      if (form.value.validate() && validateCountry()) {
+        console.log({
+          fullname: fullname.value,
+          email: email.value,
+          country: country.value,
+        })
+      }
     }
-  },
+
+    return { fullname, emptyFieldRule, fullnameRule, email, emailRule, country, countries, printForm, form, valid, error }
+  }
 };
+
 </script>
 
 <style>

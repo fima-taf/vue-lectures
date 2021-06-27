@@ -1,17 +1,16 @@
 <template>
   <v-app>
-    <!-- <Main/> -->
-    <CompExample title="Registration Form"></CompExample>
+    <Main/>
+    <!-- <CompositionApi title="Registration Form"></CompositionApi> -->
   </v-app>
 </template>
 
 <script setup>
 import Main from './components/Main.vue'
-import CompExample from './components/CompExample.vue'
 
 export default {
   components: {
-    Main, CompExample
+    Main
   }
 }
 // This starter template is using Vue 3 experimental <script setup> SFCs

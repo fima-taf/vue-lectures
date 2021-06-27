@@ -1,36 +1,34 @@
 <template>
-  <v-container>
+<v-container>
     <v-row justify="center">
-      <v-col cols="auto" align-self="center">
+      <v-col cols="auto" align-self="center" @click="increaseCounter()">
         <v-img
-          max-height="600"
-          max-width="1000"
-          src="src/assets/vite.png"
-          @click="showContent"
+          max-height="500"
+          max-width="500"
+          src="src/assets/vue.png"
         ></v-img>
       </v-col>
+      <v-col cols="auto" align-self="center" class="text-h2 font-weight-bold">
+        Composition API
+      </v-col>
     </v-row>
-    <v-fade-transition>
-      <v-row v-if="contentVisibale">
-        <v-col class="text-left">
-          <p class="text-h3">- Using ES modules (dev and prod)</p>
-          <p class="text-h3">- Koa dev server</p>
-          <p class="text-h3">- HMR with sockets (replacing each part)</p>
-          <p class="text-h3">- Production build - Rollup (ES Modules)</p>
-          <p class="text-h3">- Supports only new browsers (no Internet Exploder)</p>
-        </v-col>
-      </v-row>
-    </v-fade-transition>
+    <v-row justify="center">
+			<v-fade-transition>
+				<component :is="componentsList[counter].name" v-bind="componentsList[counter].props"></component>
+			</v-fade-transition>
+    </v-row>
   </v-container>
 </template>
 
 <script>
 import { ref } from '@vue/composition-api'
+import CompositionApi from './CompositionApi.vue'
+import OptionsApi from './OptionsApi.vue'
+import CompositionInfo from './CompositionInfo.vue'
+import CompositionImages from './CompositionImages.vue'
 export default {
   name: 'Main',
-  props: {
-    msg: String
-  },
+  components: {CompositionApi, OptionsApi, CompositionInfo, CompositionImages},
   setup () {
     const contentVisibale = ref(false)
 
@@ -38,11 +36,25 @@ export default {
       contentVisibale.value = true
     }
 
-    return { contentVisibale, showContent }
+		const componentsList = [
+			{name: '', props: {}},
+			{name: 'CompositionImages', props: {}},
+			{name: 'CompositionInfo', props: {}},
+			{name: 'OptionsApi', props: {title: 'Registration Form (Options)'}},
+			{name: 'CompositionApi', props: {title: 'Registration Form (Composition)'}}
+		]
+
+    const counter = ref(0)
+
+    const increaseCounter = () => {
+			if (counter.value < (componentsList.length - 1)) counter.value += 1
+			else counter.value = 0
+    }
+
+    return { contentVisibale, showContent, increaseCounter, counter, componentsList }
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 </style>
