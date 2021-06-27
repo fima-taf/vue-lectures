@@ -1,7 +1,7 @@
 <template>
 <v-container>
     <v-row justify="center">
-      <v-col cols="auto" align-self="center" @click="increaseCounter()">
+      <v-col cols="auto" align-self="center">
         <v-img
           max-height="500"
           max-width="500"
@@ -21,37 +21,42 @@
 </template>
 
 <script>
-import { ref } from '@vue/composition-api'
+import { onMounted, ref } from '@vue/composition-api'
 import CompositionApi from './CompositionApi.vue'
 import OptionsApi from './OptionsApi.vue'
 import CompositionInfo from './CompositionInfo.vue'
 import CompositionImages from './CompositionImages.vue'
+import CompositionSummary from './CompositionSummary.vue'
 export default {
   name: 'Main',
-  components: {CompositionApi, OptionsApi, CompositionInfo, CompositionImages},
+  components: {CompositionApi, OptionsApi, CompositionInfo, CompositionImages, CompositionSummary},
   setup () {
-    const contentVisibale = ref(false)
-
-    const showContent = () => {
-      contentVisibale.value = true
-    }
 
 		const componentsList = [
 			{name: '', props: {}},
-			{name: 'CompositionImages', props: {}},
 			{name: 'CompositionInfo', props: {}},
+			{name: 'CompositionImages', props: {}},
 			{name: 'OptionsApi', props: {title: 'Registration Form (Options)'}},
-			{name: 'CompositionApi', props: {title: 'Registration Form (Composition)'}}
+			{name: 'CompositionApi', props: {title: 'Registration Form (Composition)'}},
+      {name: 'CompositionSummary', props: {}}
 		]
 
     const counter = ref(0)
+
+    onMounted(function () {
+      document.addEventListener('keydown', function(e) {
+        if (e.key === '\\') {
+          increaseCounter()
+        }
+      })
+    })
 
     const increaseCounter = () => {
 			if (counter.value < (componentsList.length - 1)) counter.value += 1
 			else counter.value = 0
     }
 
-    return { contentVisibale, showContent, increaseCounter, counter, componentsList }
+    return {  counter, componentsList }
   }
 }
 </script>

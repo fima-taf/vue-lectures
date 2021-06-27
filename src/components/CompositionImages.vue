@@ -2,18 +2,13 @@
   <div>
     <v-img
 			v-if="num === 1"
-			@click="replaceImage"
-      max-height="2000"
-      max-width="2000"
-      :src="'src/assets/comapre-1.png'"
-    ></v-img>
-		<v-img
-			v-if="num === 2"
-			@click="replaceImage"
-      max-height="2000"
-      max-width="2000"
       :src="'src/assets/comapre-2.png'"
     ></v-img>
+		<!-- <v-img
+			v-if="num === 2"
+			@click="replaceImage"
+      :src="'src/assets/comapre-1.png'"
+    ></v-img> -->
   </div>
 </template>
 

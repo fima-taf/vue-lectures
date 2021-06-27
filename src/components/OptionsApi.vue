@@ -71,7 +71,7 @@ export default {
     },
     emailRule (val) {
       const regex = /[\w\W]+\@gmail\.com/gm;
-      return regex.test(val) || "We currently support only gmail (For the sake of the example of course)"
+      return regex.test(val) || "We currently support only gmail (Hard times...)"
     },
     printForm () {
       if (this.$refs.form.validate() && this.validateCountry()) {

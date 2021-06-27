@@ -55,35 +55,26 @@ export default {
   props: {
     title: String
   },
-  setup(props) {
-
-    // const title = toRef(props, 'title')
-    // const {title} = toRefs(props)
+  setup() {
 
     const emptyFieldRule = (val) => {
       return !!val || "Required field";
     }
 
-    // const formToSend = reactive({
-    //   fullname: '',
-    //   email: '',
-    //   country: ''
-    // })
-
-    // const fullname = ref('');
+    const fullname = ref('');
 
     const fullnameRule = (val) => {
       return val.split(" ").length >= 2 || "A full name can't be only 1 word (Unless you are Madona or some other creature...)"
     }
 
-    // const email = ref('');
+    const email = ref('');
 
     const emailRule = (val) => {
       const regex = /[\w\W]+\@gmail\.com/gm;
       return regex.test(val) || "We currently support only gmail (For the sake of the example of course)"
     }
 
-    // const country = ref('');
+    const country = ref('');
 
     const countries = computed(() => ["United States", "Canada", "Israel", "Germany", "India", "China"])
 
